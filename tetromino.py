@@ -1,7 +1,7 @@
 import random
 from settings import GRID_COLS, TILE_SIZE
 
-# Tetromino şekilleri (her biri 4 kare içeriyor)
+# tetromino shapes (each includes 4 blocks)
 SHAPES = {
     'I': [(0, 1), (1, 1), (2, 1), (3, 1)],
     'O': [(1, 0), (2, 0), (1, 1), (2, 1)],
@@ -17,15 +17,15 @@ class Tetromino:
         self.shape_name = random.choice(list(SHAPES.keys()))
         self.blocks = SHAPES[self.shape_name]
 
-        # Her kareye 2 veya 4 değerini ata
+        # put 2 or 4 for each block
         self.values = [random.choice([2, 4]) for _ in range(4)]
 
-        # Konum (grid üstünde), sola ortalanmış şekilde başla
+        
         self.x = GRID_COLS // 2 - 2
-        self.y = 0  # Yukarıdan başlar
+        self.y = 0  # starts from upside
 
     def get_cell_positions(self):
-        """Tetromino'nun grid üzerindeki gerçek hücre pozisyonları."""
+        
         return [(x + self.x, y + self.y) for (x, y) in self.blocks]
 
     def move(self, dx, dy):
@@ -33,5 +33,5 @@ class Tetromino:
         self.y += dy
 
     def rotate(self):
-        # Saat yönünde döndür (x, y) -> (-y, x)
+        # rotate clockwise (x, y) -> (-y, x)
         self.blocks = [(-y, x) for (x, y) in self.blocks]

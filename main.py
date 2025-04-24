@@ -23,8 +23,8 @@ def draw_tetromino(screen, tetromino):
 
 
 
-        # Sayıyı yaz:
-        text = font.render(str(value), True, (0, 0, 0))  # daha yumuşak koyu gri
+        # write the number:
+        text = font.render(str(value), True, (0, 0, 0))  # soft gray
         text_rect = text.get_rect(center=(x + TILE_SIZE // 2, y + TILE_SIZE // 2))
         screen.blit(text, text_rect)
 
@@ -38,7 +38,7 @@ def main():
     grid = Grid()
     current_tetromino = Tetromino()
     fall_time = 0
-    fall_speed = 0.5  # saniye cinsinden
+    fall_speed = 0.5  # as seconds
 
     running = True
     while running:
@@ -69,9 +69,9 @@ def main():
                     if not grid.is_valid_position(current_tetromino):
                         current_tetromino.rotate()
                         current_tetromino.rotate()
-                        current_tetromino.rotate()  # 3 kere daha dönerek eski haline getir
+                        current_tetromino.rotate()  
 
-        fall_time += clock.get_time() / 1000  # milisaniye → saniye
+        fall_time += clock.get_time() / 1000  # milliseconds --> seconds
 
         if fall_time >= fall_speed:
             if grid.is_valid_position(current_tetromino, dy=1):
@@ -81,16 +81,16 @@ def main():
                 grid.merge_tiles()
                 grid.clear_full_rows()
                 if grid.check_win():
-                    print("Kazandın!")
+                    print("You Win!")
                     game_over = True
 
                 elif grid.check_game_over():
-                    print("Oyun Bitti!")
+                    print("Game Over!")
                     game_over = True
 
                 current_tetromino = Tetromino()
                 if not grid.is_valid_position(current_tetromino):
-                    print("Oyun bitti!")
+                    print("Game Over")
                     running = False
             fall_time = 0
 
@@ -100,14 +100,14 @@ def main():
         pygame.display.flip()
         clock.tick(60)
 
-        # Oyun bittiğinde mesaj göster
-    font = pygame.font.SysFont("arialblack", 40)  # Daha küçük, ama hâlâ güçlü bir yazı tipi
+        # show a message when the game ends
+    font = pygame.font.SysFont("arialblack", 40)
     if grid.check_win():
         message = "You Win!"
-        color = (0, 200, 100)  # Yumuşak yeşil
+        color = (0, 200, 100)  # soft green
     else:
         message = "Game Over!"
-        color = (255, 128, 128)  # Orkide moru — pembe temaya çok yakışır
+        color = (255, 128, 128)  # purple
 
     text = font.render(message, True, color)
     text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))

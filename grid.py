@@ -17,7 +17,7 @@ class Grid:
                         color = TILE_COLORS.get(value, (220, 220, 180))
                         pygame.draw.rect(screen, color, (x, y, TILE_SIZE, TILE_SIZE))
                         
-                        # Sayıyı çiz
+                        # draw the number
                         text = font.render(str(value), True, (0, 0, 0))
                         text_rect = text.get_rect(center=(x + TILE_SIZE // 2, y + TILE_SIZE // 2))
                         screen.blit(text, text_rect)
@@ -51,7 +51,7 @@ class Grid:
                     merged_value = current * 2
                     self.grid[row][col] = merged_value
                     self.grid[row - 1][col] = 0
-                    self.score += merged_value  # 💰 PUAN EKLE
+                    self.score += merged_value  # add point
 
                     for r in range(row - 1, 0, -1):
                         self.grid[r][col] = self.grid[r - 1][col]
@@ -72,7 +72,7 @@ class Grid:
         cleared_rows = 0
         for row in self.grid:
             if 0 not in row:
-                self.score += sum(row)  # 💰 satır puanı
+                self.score += sum(row)  # row point
                 cleared_rows += 1
             else:
                 new_grid.append(row)
@@ -86,7 +86,7 @@ class Grid:
     
     def __init__(self):
         self.grid = [[0 for _ in range(GRID_COLS)] for _ in range(GRID_ROWS)]
-        self.score = 0  # ⭐️ PUAN
+        self.score = 0  # point
 
 
     def check_win(self):
@@ -96,7 +96,7 @@ class Grid:
         return False
 
     def check_game_over(self):
-        for cell in self.grid[0]:  # en üst satıra bak
+        for cell in self.grid[0]:  
             if cell != 0:
                 return True
         return False
